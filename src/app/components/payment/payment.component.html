@@ -1,0 +1,33 @@
+<div class="pay-container">
+
+    <div class="product-details">
+      <h3>Star wars Chop Sticks only 8.99</h3>
+      <div class="product-card">
+        <img [src]="productImage" class="product-image">
+      </div>
+    </div>
+  
+    <!-- User Message -->
+    <div *ngIf="userMessage" class="user-message">
+      <p *ngIf="userMessage == 'Payment successful!'" style="color: green; font-weight: bold;">{{ userMessage }}</p>
+      <p *ngIf="userMessage != 'Payment successful!'" style="color: red;">{{ userMessage }}</p>
+    </div>
+  
+    <div *ngIf="!transactionId" style="width: 300px;">
+      <!-- PayPal Button -->
+      <h4>Pay with PayPal</h4>
+      <div id="paypal-button-container" class="paypal-container" ></div>
+    </div>
+  
+    <p id="result-message"></p>
+  
+    <div *ngIf="transactionId" class="transaction-details">
+      <h3>Transaction Details</h3>
+      <div class="transaction-card">
+        <p><strong>Transaction ID:</strong> {{ transactionId }}</p>
+        <p><strong>Status:</strong> {{ status }}</p>
+      </div>
+    </div>
+    
+  </div>    
+  

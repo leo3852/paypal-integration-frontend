@@ -1,0 +1,66 @@
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+declare var paypal: any;
+
+
+@Component({
+  selector: 'app-payment',
+  imports: [CommonModule],
+  templateUrl: './payment.component.html',
+  styleUrl: './payment.component.scss'
+})
+
+
+export class PaymentComponent implements OnInit {
+  transactionId: string = '';
+  status: string = '';
+  productImage = 'assets/product.png'; 
+  userMessage: string = '';
+
+  ngOnInit(): void {
+      if (typeof paypal === 'undefined') {
+        console.error('PayPal SDK is not loaded yet');
+        return;
+      }
+      
+      // Load the PayPal SDK script dynamically
+      paypal.Buttons({
+        
+        style: {
+            shape: "rect",
+            layout: "vertical",
+            color: "gold",
+            label: "paypal"
+        },
+        message: {
+            amount: 8.99,
+        },
+        createOrder: (data: any, actions: any) => {
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value: '1.99' // Set any amount from a var or a service
+              }
+            }]
+          });
+        },
+        onApprove: async (data: any, actions: any) => {
+          const details = await actions.order.capture();
+          this.transactionId = details.id;
+          this.status = details.status;
+          console.log('Transaction completed:', details);
+        },
+        onCancel: (data: any) => {
+          this.status = 'Cancelled';
+          this.userMessage = 'Transaction cancelled try again.';
+        },
+        onError: (err: any) => {
+          console.error('PayPal error:', err);
+          this.status = 'Error';
+        }
+      }) .render('#paypal-button-container');
+      
+  }
+
+
+}
