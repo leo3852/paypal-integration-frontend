@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { environment } from '../../../environments/environment';
 declare var paypal: any;
 
 @Component({
@@ -29,7 +30,7 @@ export class PaymentComponent implements OnInit {
       },
       createOrder: async () => {
         try {
-          const response = await fetch('http://localhost:8080/api/orders', {
+          const response = await fetch(`${environment.apiBaseUrl}/orders`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -44,7 +45,7 @@ export class PaymentComponent implements OnInit {
       },
       onApprove: async (data: any) => {
         try {
-          const response = await fetch(`http://localhost:8080/api/orders/${data.orderID}/capture`, {
+          const response = await fetch(`${environment.apiBaseUrl}/orders/${data.orderID}/capture`, {
             method: 'POST',
           });
           const captureData = await response.json();
@@ -77,7 +78,7 @@ export class PaymentComponent implements OnInit {
       try {
         
         //get token first from backend
-        const tokenResponse = await fetch('http://localhost:8080/api/generate-token', {
+        const tokenResponse = await fetch(`${environment.apiBaseUrl}/generate-token`, {
           method: 'POST',
         });
         const tokenData = await tokenResponse.json();
@@ -99,7 +100,7 @@ export class PaymentComponent implements OnInit {
           //pass client token
           authorization: tokenData.client_token,
           createOrder: async () => {
-            const response = await fetch('http://localhost:8080/api/orders', {
+            const response = await fetch(`${environment.apiBaseUrl}/orders`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
             });

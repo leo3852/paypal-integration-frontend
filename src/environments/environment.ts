@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
+  apiBaseUrl: 'http://localhost:8080/api',
   paypal: {
     sdkUrl: 'https://www.paypal.com/sdk/js',
     clientId: 'Aehr-KLMdRUZY1m0-_8GqwVNSKTpu85qan79ZFlD6H0zjo_r-rl1zgb9lW6go1uP-iDZh7yerWpO0FNw',
