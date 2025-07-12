@@ -17,8 +17,8 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/paypal-integration",
-            "baseHref": "/paypal-integration/",
+            "outputPath": "dist/paypal-integration-frontend",
+            "baseHref": "/paypal-integration-frontend/",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -105,7 +105,7 @@
         "deploy": {
           "builder": "angular-cli-ghpages:deploy",
           "options": {
-            "dir": "dist/paypal-integration"
+            "dir": "dist/paypal-integration-frontend"
           }
         }
       }
