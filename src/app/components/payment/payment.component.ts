@@ -49,7 +49,7 @@ export class PaymentComponent implements OnInit {
             method: 'POST',
           });
           const captureData = await response.json();
-          this.transactionId = captureData.id;
+          this.transactionId = captureData.purchase_units[0].payments.captures[0].id;
           this.status = captureData.status;
           this.userMessage = 'Payment successful!';
           console.log('Capture result:', captureData);
