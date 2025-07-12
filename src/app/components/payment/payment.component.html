@@ -27,7 +27,11 @@
         <p><strong>Transaction ID:</strong> {{ transactionId }}</p>
         <p><strong>Status:</strong> {{ status }}</p>
       </div>
+      <button (click)="refundPayment()" [disabled]="!transactionId || status === 'REFUNDED'" style="margin-top: 50px;">
+          Refund Payment
+      </button>
     </div>
+
     
   </div>    
   

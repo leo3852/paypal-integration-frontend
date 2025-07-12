@@ -73,6 +73,34 @@ export class PaymentComponent implements OnInit {
   }
 
 
+    // --- REFUND ---
+    async refundPayment() {
+      if (!this.transactionId) {
+        this.userMessage = '';
+        return;
+      }
+
+      try {
+        const response = await fetch(`${environment.apiBaseUrl}/orders/${this.transactionId}/refund`, {
+          method: 'POST',
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Error refunding order');
+        }
+
+        const refundResult = await response.json();
+        console.log('Refund successful:', refundResult);
+        this.userMessage = `Refund successful! Refund ID: ${refundResult.id || 'N/A'}`;
+        this.status = 'REFUNDED';
+      } catch (error: any) {
+        console.error('Error refunding payment:', error);
+        this.userMessage = error.message || 'Error refunding payment.';
+        this.status = 'REFUND_FAILED';
+      }
+    }
+
     //initialize card fields advanced integration with backend 
     async initializeCardFields() {
       try {
